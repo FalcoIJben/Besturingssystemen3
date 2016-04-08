@@ -1,0 +1,8 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" title="STL class. " alt="" coords="5,31,109,57"/>
+<area shape="rect" id="node2" title="STL class. " alt="" coords="166,5,274,32"/>
+<area shape="rect" id="node4" title="STL class. " alt="" coords="158,56,282,83"/>
+<area shape="rect" id="node3" href="$classassert__error.html" title="If an assertion fails an instance of assert_error is thrown. " alt="" coords="333,5,424,32"/>
+<area shape="rect" id="node5" href="$classsyntax__error.html" title="A class to throw syntax errors (derives from runtime_error) " alt="" coords="331,56,426,83"/>
+<area shape="rect" id="node6" href="$classunix__error.html" title="A class to be used when throwing unix system errors with some additional text (derives from std::runt..." alt="" coords="339,107,418,133"/>
+</map>

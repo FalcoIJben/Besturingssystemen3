@@ -1,0 +1,107 @@
+# depslib dependency file v1.0
+1453197642 source:/home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/assert_error.cc
+	<string>
+	<sstream>
+	"assert_error.h"
+
+1448444481 /home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/assert_error.h
+	<stdexcept>
+
+1459865808 source:/home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/Command.cc
+	<iostream>
+	<fstream>
+	<cstdlib>
+	<unistd.h>
+	<limits.h>
+	<fcntl.h>
+	"asserts.h"
+	"unix_error.h"
+	"Command.h"
+
+1453197919 /home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/asserts.h
+	"where.h"
+	"assert_error.h"
+
+1453197867 /home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/where.h
+
+1454613056 /home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/unix_error.h
+	<stdexcept>
+	<string>
+	"where.h"
+
+1354277362 /home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/Command.h
+	<string>
+	<vector>
+
+1422135042 source:/home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/main.cc
+	<stdexcept>
+	<iostream>
+	<cstdlib>
+	"ansi.h"
+	"assert_error.h"
+	"unix_error.h"
+	"Shell.h"
+
+1423260298 /home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/ansi.h
+	"common.h"
+
+1423315774 /home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/common.h
+
+1354230232 /home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/Shell.h
+	<iostream>
+	"Sequence.h"
+	"Token.h"
+
+1354230928 /home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/Sequence.h
+	<vector>
+	"Pipeline.h"
+
+1354279688 /home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/Pipeline.h
+	<vector>
+	"Command.h"
+
+1391268030 /home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/Token.h
+	<string>
+	<istream>
+
+1459854227 source:/home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/Pipeline.cc
+	<iostream>
+	<unistd.h>
+	"asserts.h"
+	"unix_error.h"
+	"Pipeline.h"
+
+1459854290 source:/home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/Sequence.cc
+	<iostream>
+	<sys/wait.h>
+	<unistd.h>
+	<fcntl.h>
+	<signal.h>
+	<cstring>
+	"asserts.h"
+	"unix_error.h"
+	"Sequence.h"
+
+1354522670 source:/home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/Shell.cc
+	<signal.h>
+	"asserts.h"
+	"syntax_error.h"
+	"Shell.h"
+	"Token.h"
+
+1353410006 /home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/syntax_error.h
+	<stdexcept>
+	<string>
+
+1382611402 source:/home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/Token.cc
+	"asserts.h"
+	"Token.h"
+	<cctype>
+	<cstring>
+
+1448447775 source:/home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/unix_error.cc
+	<cstring>
+	<cerrno>
+	<sstream>
+	"unix_error.h"
+

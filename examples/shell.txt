@@ -1,0 +1,118 @@
+
+		=============================================
+		Dit is een stukje uit de manual van een shell
+		=============================================
+
+....
+
+  Definitions
+     A blank is a tab or a space. A name is a sequence  of  ASCII
+     letters,  digits, or underscores, beginning with a letter or
+     an underscore. A parameter is a name, a digit, or any of the
+     characters *, @, #, ?, -, $, and !.
+
+USAGE
+
+  Commands
+     A simple-command is a sequence of non-blank words  separated
+     by  blanks. The first word specifies the name of the command
+     to be executed. Except as  specified  below,  the  remaining
+     words  are  passed  as arguments to the invoked command. The
+     command name is passed as  argument  0  (see  exec(2)).  The
+     value  of  a  simple-command  is  its exit status if it ter-
+     minates normally, or (octal)  200+status  if  it  terminates
+     abnormally; see signal(3HEAD) for a list of status values.
+
+     A pipeline is a sequence of one or more  commands  separated
+     by  |.  The  standard output of each command but the last is
+     connected by a pipe(2) to the standard  input  of  the  next
+     command.  Each  command  is  run  as a separate process; the
+     shell waits for the last  command  to  terminate.  The  exit
+     status  of a pipeline is the exit status of the last command
+     in the pipeline.
+
+     A list is a sequence of one or more pipelines  separated  by
+     ;,  &,  &&,  or  ||, and optionally terminated by ; or &. Of
+     these four symbols, ; and & have equal precedence, which  is
+     lower  than  that  of  && and ||. The symbols && and || also
+     have equal precedence. A  semicolon  (;)  causes  sequential
+     execution  of  the  preceding  pipeline  (that is, the shell
+     waits for the pipeline to finish before executing  any  com-
+     mands  following  the  semicolon);  an  ampersand (&) causes
+     asynchronous execution of the preceding pipeline  (that  is,
+     the  shell  does  not wait for that pipeline to finish). The
+     symbol && (||) causes the list following it to  be  executed
+     only  if  the  preceding  pipeline returns a zero (non-zero)
+     exit status.
+
+     A command is either a simple-command or one of  the  follow-
+     ing.  Unless  otherwise stated, the value returned by a com-
+     mand is that of the last simple-command executed in the com-
+     mand.
+
+     ....etc....
+
+  Input/Output Redirection
+     A command's input and output may be redirected using a  spe-
+     cial  notation  interpreted  by the shell. The following may
+     appear anywhere in a simple-command or may precede or follow
+     a  command and are not passed on as arguments to the invoked
+     command. ...
+
+     <word Use file word as standard input (file descriptor 0).
+
+     >word Use file word as standard output (file descriptor  1).
+           If  the file does not exist, it is created; otherwise,
+           it is truncated to zero length.
+
+     >>word
+           Use file word as standard output. If the file  exists,
+           output  is  appended  to  it  (by first seeking to the
+           EOF); otherwise, the file is created.
+
+     The order in which redirections are  specified  is  signifi-
+     cant.  The  shell  evaluates redirections left-to-right.
+     ...
+
+     Using the terminology introduced on the  first  page,  under
+     Commands,  if  a  command is composed of several simple com-
+     mands, redirection will be evaluated for the entire  command
+     before it is evaluated for each simple command. That is, the
+     shell evaluates redirection for the entire list,  then  each
+     pipeline  within  the  list,  then  each command within each
+     pipeline, then each list within each command.
+
+     If a command is followed by & the default standard input for
+     the  command  is  the  empty  file /dev/null. Otherwise, the
+     environment for the execution of a command contains the file
+     descriptors   of   the   invoking   shell   as  modified  by
+     input/output specifications.
+
+     ....
+
+     The following characters have a special meaning to the shell
+     and cause termination of a word unless quoted:
+
+          ;  &  (  )  |  ^  <  >  newline  space  tab
+
+  Signals
+     The INTERRUPT and QUIT signals for an  invoked  command  are
+     ignored  if  the command is followed by &; otherwise signals
+     have the values inherited by the shell from its parent, with
+     the  exception  of  signal 11 [SEGV] (but  see also the trap
+	 command below).
+
+  Execution
+     Each time a command is executed, the  command  substitution,
+     parameter  substitution,  blank interpretation, input/output
+     redirection, and filename generation listed above  are  car-
+     ried  out. If the command name matches the name of a defined
+     function, the function is  executed  in  the  shell  process
+     (note  how  this  differs from the execution of shell script
+     files, which require a sub-shell  for  invocation).  If  the
+     command  name does not match the name of a defined function,
+     but matches one of the Special Commands listed below, it  is
+     executed in the shell process.
+
+....
+

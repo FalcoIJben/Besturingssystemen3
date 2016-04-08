@@ -1,0 +1,12 @@
+# Doxyfile 1.4.4
+#
+#	@(#)doxyfile	1.1	akk	Mon Nov  5 20:03:21 CET 2012
+#
+#---------------------------------------------------------------------------
+# Project related configuration options
+#---------------------------------------------------------------------------
+PROJECT_NAME           = "Unix Command Line Interpreter"
+# This is project the version number
+PROJECT_NUMBER         = 5.1
+# Include common boiler-plate specs
+@INCLUDE				= ../diversen/doxydefault

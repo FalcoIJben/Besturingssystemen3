@@ -1,0 +1,10 @@
+#titlearea tr {
+	/* To bad, cannot overrule element style */
+}
+#projectname { font-size:250%; }
+#projectnumber { font-size:80%; }
+
+.tablist li { line-height:20px; }
+
+.header { height:50px; }
+.title { font-size:120%; }

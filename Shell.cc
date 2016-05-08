@@ -10,6 +10,12 @@ using namespace std;
 
 // =============================================================================
 // INITIALIZE
+void  INThandler(int sig);
+void  INThandler(int sig)
+{
+     signal(sig, SIG_IGN);
+     signal(sig, INThandler);
+}
 
 // Initialize a Shell instance
 Shell::Shell(istream& input)
@@ -25,13 +31,9 @@ Shell::Shell(istream& input)
 // The main level function
 void	Shell::main()
 {
-	// Ignore some signals
-	// TODO:
-	// but never these ones
-	// TODO:
+    signal(SIGINT, INThandler);
+    signal(SIGQUIT, SIG_IGN);
 
-
-	// The command loop
 	do {
 		cout << "SHELL: " << flush;				// prompt the user for command
 		Sequence  *sequence = parse();			// parse one line of input

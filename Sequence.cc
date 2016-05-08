@@ -13,6 +13,8 @@
 using namespace std;
 
 
+
+
 void  Sequence::addPipeline(Pipeline* pp)
 {
 	require(pp != 0);
@@ -46,29 +48,61 @@ void	Sequence::execute()
 
 	// Execute each pipeline in turn.
 	// Also see: fork(2), nice(2), signal(2), wait(2), WIF...(2), strsignal(3)
-	size_t  j = commands.size();			// for count-down
-	for(vector<Pipeline*>::iterator  i = commands.begin() ; i != commands.end() ; ++i, --j)
-	{
-		Pipeline*  pp = *i;
-		if(!pp->isEmpty())
-		{
-			if(j == commands.size()) {//DEBUG
-				///cerr << "Sequence::FIRST PIPELINE\n";//DEBUG
 
 
-			}//DEBUG
-			// if (pp->isBuiltin()) ...
-			pp->execute();
-			// TODO
-			if(j == 1) {//DEBUG
-				///cerr << "Sequence::LAST PIPELINE\n";//DEBUG
-			} else {//DEBUG
-				///cerr << "Sequence::WAIT FOR PIPELINE\n";//DEBUG
-			}//DEBUG
-		}
-		// else ignore empty pipeline
-	}
+
+    //cerr << "voor \n";
+    int cid = fork();
+    //cerr << "na \n";
+
+
+    size_t  j = commands.size();			// for count-down
+    for(vector<Pipeline*>::iterator  i = commands.begin() ; i != commands.end() ; ++i, --j)
+    {
+        Pipeline*  pp = *i;
+        if(!pp->isEmpty())
+        {
+            if(j == commands.size()) {//DEBUG
+                //cerr << "Sequence::FIRST PIPELINE\n";//DEBUG
+                 if(cid > 0){
+
+                 }
+
+            }//DEBUG
+            // if (pp->isBuiltin()) ...
+
+
+            // TODO
+            if(j == 1) {//DEBUG
+                ///cerr << "Sequence::LAST PIPELINE\n";//DEBUG
+                if(cid > 0){
+                    wait( (int*)0 );
+                } else {
+                    pp->execute();
+                    exit(EXIT_SUCCESS);
+                }
+
+            } else {//DEBUG
+                ///cerr << "Sequence::WAIT FOR PIPELINE\n";//DEBUG
+
+                if(cid == 0){
+                    pp->execute();
+
+
+                    exit(EXIT_SUCCESS);
+
+                } else {
+                    //dup2(p[1], 0);
+
+                    wait( (int*)0 );
+                    cid = fork();
+
+
+                }
+
+            }//DEBUG
+        }
+        // else ignore empty pipeline
+    }
+
 }
-
-
-// vim:ai:aw:ts=4:sw=4:

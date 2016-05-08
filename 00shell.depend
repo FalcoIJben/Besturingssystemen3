@@ -7,7 +7,7 @@
 1448444481 /home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/assert_error.h
 	<stdexcept>
 
-1459865808 source:/home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/Command.cc
+1462703191 source:/home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/Command.cc
 	<iostream>
 	<fstream>
 	<cstdlib>
@@ -17,6 +17,7 @@
 	"asserts.h"
 	"unix_error.h"
 	"Command.h"
+	<wait.h>
 
 1453197919 /home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/asserts.h
 	"where.h"
@@ -64,14 +65,15 @@
 	<string>
 	<istream>
 
-1459854227 source:/home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/Pipeline.cc
+1462703217 source:/home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/Pipeline.cc
 	<iostream>
 	<unistd.h>
 	"asserts.h"
 	"unix_error.h"
 	"Pipeline.h"
+	<wait.h>
 
-1459854290 source:/home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/Sequence.cc
+1462703005 source:/home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/Sequence.cc
 	<iostream>
 	<sys/wait.h>
 	<unistd.h>
@@ -82,7 +84,7 @@
 	"unix_error.h"
 	"Sequence.h"
 
-1354522670 source:/home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/Shell.cc
+1462702236 source:/home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/opdrachten/shell/Shell.cc
 	<signal.h>
 	"asserts.h"
 	"syntax_error.h"

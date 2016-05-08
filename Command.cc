@@ -10,6 +10,7 @@
 #include "asserts.h"
 #include "unix_error.h"
 #include "Command.h"
+#include <wait.h>
 using namespace std;
 
 
@@ -64,82 +65,6 @@ bool	Command::isEmpty() const
 // Execute a command
 void	Command::execute()
 {
-
-
-    //const char *path = output.c_str();
-
-    //const char **argv = new const char* [words.size()+1];
-
-    //for (int j = 0;  j < words.size()+1;  ++j)     // copy args
-            //argv [j+1] = words[j].c_str();
-
-    //argv [words.size()] = NULL;  // end of arguments sentinel is NULL
-
-    //execv ("/home/falco/School/Jaar_2/Kwartiel_3/BestuuringsSystemen/shell/ok.txt", (char **)argv);
-
-
-    ifstream inputFile;
-    ofstream outputFile;
-
-
-//    cerr << getcwd() << endl;
-
-    ///get input
-    string file = "";
-    if (!input.empty()) {
-        string line;
-        inputFile.open(input);
-        while ( getline (inputFile,line) ) {
-            file += line += '\n';
-        }
-        inputFile.close();
-    }
-
-    for (int i = 0;  i < words.size();  ++i) {
-        string word = words[i];
-
-        ///cat
-        if(word == "cat" ) {
-            if(input.empty()) {
-                for (int j = i+1;  j < words.size();  ++j) {
-                    string line;
-                    ifstream nextFile;
-                    word = words[j];
-
-                    nextFile.open(word);
-                    while ( getline (nextFile,line) ) {
-                        file += line += '\n';
-                    }
-                    nextFile.close();
-                }
-            }
-            if (!output.empty()) {
-                    if (append) {
-                        outputFile.open (output, ios::app | ios::ate);
-                    } else {
-                        outputFile.open (output);
-                    }
-                    outputFile << file;
-                    outputFile.close();
-                } else {
-                cerr << file;
-            }
-            break;
-        }
-
-        ///other?
-
-    }
-
-
-
-
-
-
-
-
-
-
 	// TODO:	Handle I/O redirections.
 	//			Don't blindly assume the open systemcall will always succeed!
 	// TODO:	Convert the words vector<string> to: array of (char*) as expected by 'execv'.
@@ -155,6 +80,108 @@ void	Command::execute()
 	// Also see: close(2), open(2), getcwd(3), getenv(3), access(2), execv(2), exit(2)
 
 	// TODO: replace the code below with something that really works
+
+
+
+
+
+
+
+
+
+
+
+    /// commands naar array zetten
+    const char *programname = words[0].c_str();
+
+    const char **argv = new const char* [words.size()+2];   // extra room for program name and sentinel
+    argv [0] = programname;         // by convention, argv[0] is program name
+        for (int j = 1;  j < words.size()+1;  ++j)     // copy args
+            argv [j] = words[j] .c_str();
+
+    argv [words.size()] = NULL;  // end of arguments sentinel is NULL
+
+    ///path
+
+    setenv("PWD", getenv("HOME"), 1);
+    chdir(getenv("PWD"));
+    //cerr << getenv("PWD") << "> " << endl;
+
+
+
+    //chdir(getenv("HOME"));
+    //cerr << "pwd: "<< getenv("PWD") << endl;
+    //cerr << "path: "<< getenv("PATH") << endl;
+    //cerr << "display: "<< getenv("DISPLAY") << endl;
+    //cerr << "term: "<< getenv("TERM") << endl;
+    //cerr << "shell: "<< getenv("SHELL") << endl;
+
+
+
+
+
+
+    ///voer programma uit
+    int cid = fork(); ///maak nieuw process
+
+    if (cid == 0) {
+        ///nieuwe process
+        chdir(getenv("PWD"));
+
+        ///I/O
+        //cerr << "other input: "<< dup(0) << endl;
+        int inf = -1;
+        int onf = -1;
+        if (!input.empty()) {
+            inf = open(input.c_str(), O_RDONLY);
+            dup2(inf, 0);
+            //cerr << "input: "<< inf << endl;
+
+        }
+        //sclose(inf);
+
+        if (!output.empty()) {
+            if (append) {
+                //cerr << " >>"<< output;
+                onf = open(output.c_str(), O_WRONLY| O_CREAT | O_APPEND);
+            } else {
+                //cerr << " >"<< output;
+                onf = open(output.c_str(), O_WRONLY | O_CREAT | O_TRUNC);
+            }
+            dup2(onf,1);
+
+        }
+        close(onf);
+
+
+        //cerr << "before" << endl;
+        int result = execvp (programname, (char **)argv);
+
+
+        cerr << "failure" << endl;
+        exit(EXIT_FAILURE);
+
+
+
+
+    } else {
+
+        /// het orginele process
+        int  status = 0;  // Note: only 2 bytes used!
+        int  cid = wait( & status );
+        exit(status);
+
+        //cerr << "status = " << status << endl; ///????
+
+
+        //EXIT_SUCCESS;
+        //cerr << "ok" << endl;
+        //execlp( programname,   "more", 0  );
+    }
+
+
+
+
 
 #if 0	/* DEBUG code: Set to 0 to turn off the next block of code */
 	cerr <<"Command::execute ";
@@ -178,6 +205,3 @@ void	Command::execute()
 	}
 #endif	/* end DEBUG code */
 }
-
-
-// vim:ai:aw:ts=4:sw=4:

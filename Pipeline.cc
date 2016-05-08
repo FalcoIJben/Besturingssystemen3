@@ -6,13 +6,17 @@
 #include "asserts.h"
 #include "unix_error.h"
 #include "Pipeline.h"
+#include <wait.h>
 using namespace std;
+
+
 
 
 Pipeline::Pipeline()
 	: background(false)
 {
 }
+
 
 
 void	Pipeline::addCommand(Command *cp)
@@ -44,22 +48,66 @@ void	Pipeline::execute()
 	// we must created the various child processes from the right to the left.
 	// Also see: pipe(2), fork(2), dup2(2), dup(2), close(2), open(2).
 	// And maybe usefull for debugging: getpid(2), getppid(2).
+
+
+
 	size_t	 j = commands.size();		// for count-down
+	//int  p[j];			// room for the pipe descriptors
+    //pipe(p);
+
+
 	// TODO
+	int  p[2];			// room for the pipe descriptors
+    pipe(p);
+	int cid = fork();
+
+
 	for (vector<Command*>::reverse_iterator  i = commands.rbegin() ; i != commands.rend() ; ++i, --j)
 	{
 		Command  *cp = *i;
-		if (j == commands.size()) {//DEBUG
+		//cid = fork();
+		if (j == commands.size()) {
+            if(cid > 0) {
+                int  status = 0;
+                int  cid = wait( & status );
+                if(status != 0) {
+                    cout << "exitstatus of pipeline is not 0" << endl;
+                    if(status != 0) {
+                        cout << "signal interupted, status: " << status << endl;
+                        raise (SIGABRT);
+                        cout << "core dumped" << endl;
+                    }
+
+                    //exit(status);
+                }
+                if(commands.size() != 1){
+                    dup2(p[0], 0);
+                }
+                dup(1);
+                close(p[0]);
+                close(p[1]);
+                cp->execute();
+            }
 			///cerr << "Pipeline::RIGHTMOST PROCESS\n";//DEBUG
-		}//DEBUG
-		//TODO
-		cp->execute();
-		if (j == 1) {//DEBUG
-			///cerr << "Pipeline::LEFTMOST PROCESS\n";//DEBUG
-		} else {//DEBUG
-			///cerr << "Pipeline::CONNECT TO PROCESS\n";//DEBUG
-		}//DEBUG
+		}
+
+        if(cid == 0 && j != commands.size()) {
+            if(j != 1){
+                dup2(p[0], 0);
+            }
+            dup2(p[1], 1);
+            close(p[0]);
+
+            close(p[1]);
+            cp->execute();
+        }
+		if (j == 1) {
+            if(cid == 0) {
+
+                exit(EXIT_SUCCESS);
+            }
+		} else {
+
+		}
 	}
 }
-
-// vim:ai:aw:ts=4:sw=4:

@@ -77,8 +77,7 @@ void	Pipeline::execute()
                         raise (SIGABRT);
                         cout << "core dumped" << endl;
                     }
-
-                    //exit(status);
+                    exit(status);
                 }
                 if(commands.size() != 1){
                     dup2(p[0], 0);

@@ -153,10 +153,7 @@ void	Command::execute()
         }
         close(onf);
 
-
-        //cerr << "before" << endl;
         int result = execvp (programname, (char **)argv);
-
 
         cerr << "failure" << endl;
         exit(EXIT_FAILURE);
@@ -171,12 +168,7 @@ void	Command::execute()
         int  cid = wait( & status );
         exit(status);
 
-        //cerr << "status = " << status << endl; ///????
 
-
-        //EXIT_SUCCESS;
-        //cerr << "ok" << endl;
-        //execlp( programname,   "more", 0  );
     }
 
 
